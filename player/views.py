@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from .models import Player
 import requests
@@ -22,12 +23,12 @@ headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KH
        'Accept-Encoding': 'none',
        'Accept-Language': 'en-US,en;q=0.8',
        'Connection': 'keep-alive'}
-playerList = []
 def parse_futbin_page(pageNumb):
     url = URL_BASE + str(pageNumb)
     page = requests.get(url, headers=headers)
     soup = BeautifulSoup(page.content, "html.parser")
     playerTable = soup.select("#repTb>tbody>tr")
+    playerList = []
     for player in playerTable:
         # info start
         cells = player.select('td')
@@ -55,6 +56,8 @@ def parse_futbin_page(pageNumb):
         defence = cells[12].select_one('span').text
         phyical = cells[13].select_one('span').text    
         # stat end
+        if Player.objects.filter(name=name, version=version).count() > 0: # 이미 존재하는 카드면 추가 x
+            return
         thisPlayer = Player()
         thisPlayer.name = name
         thisPlayer.club = club
@@ -74,7 +77,15 @@ def parse_futbin_page(pageNumb):
         thisPlayer.defence = defence
         thisPlayer.phyical = phyical
         thisPlayer.save()
+        playerList.append(thisPlayer)
         print(thisPlayer.name + " saved")
+    return playerList
+        
 def index(request):
-    parse_futbin_page(1)
-    return Player.objects.all()
+    start = int(request.GET.get('start'))
+    end = int(request.GET.get('end'))
+    added_players = []
+    for i in range(start,end):        
+        added_players.append(parse_futbin_page(i))
+        time.sleep(2)
+    return HttpResponse(added_players, content_type="text/json-comment-filtered")
