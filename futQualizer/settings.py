@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'futQ',    
     'rest_framework',
-    'user',
     'player'
 ]
 

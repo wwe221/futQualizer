@@ -19,6 +19,5 @@ from django.urls import path, include
 urlpatterns = [    
     path('', include('futQ.urls')),
     path('admin/', admin.site.urls),
-    path('user/', include('user.urls')),
     path('player/', include('player.urls')),
 ]
