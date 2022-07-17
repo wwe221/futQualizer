@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-3">
+    {% if player_list %}
+        <ul>
+        {% for player in player_list %}
+            <li><a href="{% url 'detail' player.id %}">{{ player.name }}_{{ player.version }}  {{player.ration}}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>선수가 없습니다.</p>
+    {% endif %}
+</div>
+{% endblock %}

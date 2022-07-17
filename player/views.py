@@ -81,7 +81,7 @@ def parse_futbin_page(pageNumb):
         print(thisPlayer.name + " saved")
     return playerList
         
-def index(request):
+def crawling(request):
     start = int(request.GET.get('start'))
     end = int(request.GET.get('end'))
     added_players = []
@@ -89,3 +89,15 @@ def index(request):
         added_players.append(parse_futbin_page(i))
         time.sleep(2)
     return HttpResponse(added_players, content_type="text/json-comment-filtered")
+
+def index(request):
+    playerList = Player.objects.order_by('rating')
+    context = {'player_list':playerList}
+    return render(request,'player/player_list.html',context )
+
+def detail(request, player_id):
+    player = Player.objects.get(id=player_id)
+    context = {
+        'player' : player
+    }
+    return render(request, 'player/detail.html', context)
