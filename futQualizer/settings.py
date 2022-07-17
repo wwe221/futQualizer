@@ -36,10 +36,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.staticfiles',    
     'futQ',    
     'rest_framework',
-    'player'
+    'player',
+    'account'
 ]
 
 MIDDLEWARE = [
@@ -148,3 +149,5 @@ LOGIN_REDIRECT_URL = '/'
 
 # 로그아웃시 이동하는 URL
 LOGOUT_REDIRECT_URL = '/'
+
+AUTH_USER_MODEL = 'account.User'
