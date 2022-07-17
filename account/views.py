@@ -11,9 +11,9 @@ def signup(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
+            userName = form.cleaned_data.get('userName')
             raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)  # 사용자 인증
+            user = authenticate(userName=userName, password=raw_password)  # 사용자 인증
             login(request, user)  # 로그인
             return redirect('index')
     else:

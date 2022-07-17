@@ -1,26 +1,22 @@
 from djongo import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
-
+from player.models import Player
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password=None):
-        if not email:
-            raise ValueError('Users must have an email address')
+    def create_user(self, userName, password=None):
 
         user = self.model(
-            email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
+            userName=userName,       
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, date_of_birth, password):
+    def create_superuser(self, userName, password):
         user = self.create_user(
-            email,
-            password=password,
-            date_of_birth=date_of_birth,
+            userName,          
+            password=password,            
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -28,22 +24,24 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    email = models.EmailField(
-        verbose_name='email',
-        max_length=255,
+    userName = models.CharField(
+        verbose_name='userName',
+        max_length=20,
+        null=False,
         unique=True,
-    )
-    date_of_birth = models.DateField()
+        default=''
+    )     
+   
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    team = models.ManyToManyField(Player, related_name="team") 
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['date_of_birth']
+    USERNAME_FIELD = 'userName'
 
     def __str__(self):
-        return self.email
+        return self.userName
 
     def has_perm(self, perm, obj=None):
         return True
