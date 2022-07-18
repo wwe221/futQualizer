@@ -121,9 +121,3 @@ def add_to_myteam(request):
         }
     return HttpResponse(json.dumps(context),status=200,content_type='application/json')
 
-def myteam(request):
-    if request.user.is_authenticated:
-        user = request.user
-        playerList = user.team.order_by('rating')
-        context = {'player_list':playerList}
-        return render(request,'player/myteam.html',context )

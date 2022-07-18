@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'futQ',    
     'rest_framework',
     'player',
-    'account'
+    'account',
+    'squad'
 ]
 
 MIDDLEWARE = [

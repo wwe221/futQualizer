@@ -23,4 +23,11 @@
         <p>선수가 없습니다.</p>
     {% endif %}
 </div>
+<div>
+    {% if squad_list %}
+        {% for squad in squad_list %}
+            {{squad.name}}
+        {% endfor %}
+    {% endif%}
+</div>
 {% endblock %}
