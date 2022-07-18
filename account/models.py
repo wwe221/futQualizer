@@ -1,6 +1,6 @@
 from djongo import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
-from player.models import Player
+from player.models import Player, PlayerForm
 
 class UserManager(BaseUserManager):
     def create_user(self, username, password=None):
@@ -30,10 +30,9 @@ class User(AbstractBaseUser):
         unique=True,
         default=''
     )     
-   
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    team = models.ManyToManyField(Player, related_name="team_user") 
+    team = models.ManyToManyField(Player,related_name='team_user')
 
     objects = UserManager()
 

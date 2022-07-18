@@ -1,4 +1,5 @@
 from djongo import models
+from django import forms
 
 
 def auto_str(cls):
@@ -10,8 +11,8 @@ def auto_str(cls):
     cls.__str__ = __str__
     return cls
 @auto_str
-
 class Player(models.Model):
+    id = models.PositiveIntegerField(primary_key=True, unique=True)
     name = models.CharField(max_length=50)
     club = models.CharField(max_length=50)
     nation = models.CharField(max_length=20)
@@ -29,3 +30,6 @@ class Player(models.Model):
     dribble = models.IntegerField()
     defence = models.IntegerField()
     phyical = models.IntegerField()
+    
+    def __str__(self):
+        return self.name

@@ -1,9 +1,10 @@
+import requests, time, json
 from django.http import JsonResponse
 from django.shortcuts import render
-from .models import Player
-import requests
+
+from account.models import User
+from .models import Player 
 from bs4 import BeautifulSoup
-import time
 from django.shortcuts import HttpResponse
 # Create your views here.
 
@@ -33,6 +34,7 @@ def parse_futbin_page(pageNumb):
         cells = player.select('td')
         profile_section = cells[0]
         name = profile_section.select_one('div .' + ClassList['name']).text
+        id = profile_section.select_one('div .' + ClassList['name'])["data-site-id"]
         club_nation = profile_section.select('.' + ClassList['club_nation'] +' a')
         club = club_nation[0].attrs.get(Attribute['title'])
         nation = club_nation[1].attrs.get(Attribute['title'])
@@ -58,6 +60,7 @@ def parse_futbin_page(pageNumb):
         if Player.objects.filter(name=name, version=version).count() > 0: # 이미 존재하는 카드면 추가 x
             return
         thisPlayer = Player()
+        thisPlayer.id = id
         thisPlayer.name = name
         thisPlayer.club = club
         thisPlayer.nation = nation
@@ -100,3 +103,18 @@ def detail(request, player_id):
         'player' : player
     }
     return render(request, 'player/detail.html', context)
+
+def add_to_myteam(request):    
+    if request.user.is_authenticated and request.method =="POST":
+        id = request.POST['playerId']
+        user = request.user
+        player = Player.objects.get(id=id)
+        user = User.objects.get(username=user.username)
+        print(user)        
+        if user in player.team_user.all():
+            user.team.remove(player)
+        else:
+            user.team.add(player)        
+        context={
+        }
+    return HttpResponse(json.dumps(context),status=200,content_type='application/json')
