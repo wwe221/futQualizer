@@ -24,28 +24,3 @@
     {% endif %}
 </div>
 {% endblock %}
-
-{% block js_contents %}
-<script>
-$(function(){
-    $(".add_player_btn").click(function(){
-        var _this = $(this);
-        var id = _this.data('id');
-        $.ajax({
-            url :'{% url "add_to_myteam" %}',
-            method :'POST',
-            data:{
-              csrfmiddlewaretoken :'{{csrf_token }}',
-              playerId : id
-            },
-            success:function(data){
-              
-            },
-            error:function(data){
-  
-            }
-          })
-    })
-})
-</script>
-{% endblock %}

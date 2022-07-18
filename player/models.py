@@ -13,6 +13,7 @@ def auto_str(cls):
 @auto_str
 class Player(models.Model):
     id = models.PositiveIntegerField(primary_key=True, unique=True)
+    img = models.CharField(max_length=150)
     name = models.CharField(max_length=50)
     club = models.CharField(max_length=50)
     nation = models.CharField(max_length=20)

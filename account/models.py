@@ -1,6 +1,6 @@
 from djongo import models
 from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
-from player.models import Player, PlayerForm
+from player.models import Player
 
 class UserManager(BaseUserManager):
     def create_user(self, username, password=None):

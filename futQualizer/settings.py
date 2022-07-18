@@ -145,9 +145,10 @@ STATICFILES_DIRS = [
 ]
 
 # 로그인 성공후 이동하는 URL
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/player'
 
 # 로그아웃시 이동하는 URL
 LOGOUT_REDIRECT_URL = '/'
 
+# Custom Auth User
 AUTH_USER_MODEL = 'account.User'

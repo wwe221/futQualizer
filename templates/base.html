@@ -26,8 +26,14 @@
         <a class="nav-link" href="{% url 'account:signup' %}">회원가입</a>
     </li>
     {% endif %}
+    {% if user.is_authenticated %}
+    <li>
+        <a class="nav-link" href="{% url 'myteam' %}">My Team</a>
+    </li>
+    {% endif %}
+    
 </ul>
-
+<hr>
 {% block content %}
 {% endblock %}
 

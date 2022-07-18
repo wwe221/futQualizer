@@ -8,7 +8,8 @@ from bs4 import BeautifulSoup
 from django.shortcuts import HttpResponse
 # Create your views here.
 
-ClassList = {    
+ClassList = {
+    "img":"player_img",    
     "name":"player_name_players_table",
     "club_nation":"players_club_nation",
     "rating":"rating"
@@ -33,6 +34,7 @@ def parse_futbin_page(pageNumb):
         # info start
         cells = player.select('td')
         profile_section = cells[0]
+        img = profile_section.select_one('div .' + ClassList['img'])['data-original']
         name = profile_section.select_one('div .' + ClassList['name']).text
         id = profile_section.select_one('div .' + ClassList['name'])["data-site-id"]
         club_nation = profile_section.select('.' + ClassList['club_nation'] +' a')
@@ -61,6 +63,7 @@ def parse_futbin_page(pageNumb):
             return
         thisPlayer = Player()
         thisPlayer.id = id
+        thisPlayer.img = img
         thisPlayer.name = name
         thisPlayer.club = club
         thisPlayer.nation = nation
@@ -109,8 +112,7 @@ def add_to_myteam(request):
         id = request.POST['playerId']
         user = request.user
         player = Player.objects.get(id=id)
-        user = User.objects.get(username=user.username)
-        print(user)        
+        user = User.objects.get(username=user.username)        
         if user in player.team_user.all():
             user.team.remove(player)
         else:
@@ -118,3 +120,10 @@ def add_to_myteam(request):
         context={
         }
     return HttpResponse(json.dumps(context),status=200,content_type='application/json')
+
+def myteam(request):
+    if request.user.is_authenticated:
+        user = request.user
+        playerList = user.team.order_by('rating')
+        context = {'player_list':playerList}
+        return render(request,'player/myteam.html',context )
