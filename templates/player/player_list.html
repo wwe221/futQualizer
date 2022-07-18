@@ -4,11 +4,41 @@
     {% if player_list %}
         <ul>
         {% for player in player_list %}
-            <li><a href="{% url 'detail' player.id %}">{{ player.name }}_{{ player.version }}  {{player.ration}}</a></li>
+            <li>
+                <a href="{% url 'detail' player.id %}">
+                    {{ player.name }}_{{ player.version }}  {{player.ration}}
+                </a>
+                <button class="add_player_btn" data-id="{{player.id}}">+</button>
+            </li>
         {% endfor %}
         </ul>
     {% else %}
         <p>선수가 없습니다.</p>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block js_contents %}
+<script>
+$(function(){
+    $(".add_player_btn").click(function(){
+        var _this = $(this);
+        var id = _this.data('id');
+        $.ajax({
+            url :'{% url "add_to_myteam" %}',
+            method :'POST',
+            data:{
+              csrfmiddlewaretoken :'{{csrf_token }}',
+              playerId : id
+            },
+            success:function(data){
+              
+            },
+            error:function(data){
+  
+            }
+          })
+    })
+})
+</script>
 {% endblock %}

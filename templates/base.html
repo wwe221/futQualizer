@@ -8,6 +8,9 @@
     <!-- pybo CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <title>Hello, Braboo!</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous">
+    </script>
 </head>
 <body>
 <ul class="navbar-nav">    
@@ -30,3 +33,6 @@
 
 </body>
 </html>
+{% block js_contents %}
+{% endblock %}
+

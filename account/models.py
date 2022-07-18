@@ -3,19 +3,19 @@ from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from player.models import Player
 
 class UserManager(BaseUserManager):
-    def create_user(self, userName, password=None):
+    def create_user(self, username, password=None):
 
         user = self.model(
-            userName=userName,       
+            username=username,       
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, userName, password):
+    def create_superuser(self, username, password):
         user = self.create_user(
-            userName,          
+            username,          
             password=password,            
         )
         user.is_admin = True
@@ -24,8 +24,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    userName = models.CharField(
-        verbose_name='userName',
+    username = models.CharField(        
         max_length=20,
         null=False,
         unique=True,
@@ -34,14 +33,14 @@ class User(AbstractBaseUser):
    
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    team = models.ManyToManyField(Player, related_name="team") 
+    team = models.ManyToManyField(Player, related_name="team_user") 
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'userName'
+    USERNAME_FIELD = 'username'
 
     def __str__(self):
-        return self.userName
+        return self.username
 
     def has_perm(self, perm, obj=None):
         return True

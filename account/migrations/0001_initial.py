@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('password', models.CharField(max_length=128, verbose_name='password')),
                 ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
-                ('userName', models.CharField(default='', max_length=20, unique=True, verbose_name='userName')),
+                ('username', models.CharField(default='', max_length=20, unique=True, verbose_name='username')),
                 ('is_active', models.BooleanField(default=True)),
                 ('is_admin', models.BooleanField(default=False)),
                 ('team', models.ManyToManyField(related_name='team', to='player.player')),
