@@ -3,7 +3,6 @@ from django.shortcuts import render
 from .models import Player
 import requests
 from bs4 import BeautifulSoup
-import pandas as pd
 import time
 from django.shortcuts import HttpResponse
 # Create your views here.
