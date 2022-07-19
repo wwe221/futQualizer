@@ -121,3 +121,9 @@ def add_to_myteam(request):
         }
     return HttpResponse(json.dumps(context),status=200,content_type='application/json')
 
+def all(request):
+    players = Player.objects.all().values()    
+    data = {
+        'players': list(players)
+    }
+    return JsonResponse(data)

@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from .forms import UserCreationForm
 
 def index(request):
-    return HttpResponse("Hello, Wellcome to futQ .")
+    return render(request, 'index.html',{})
 
 def signup(request):
     if request.method == "POST":

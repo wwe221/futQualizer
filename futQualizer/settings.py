@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,6 +53,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',
 ]
 
 ROOT_URLCONF = 'futQualizer.urls'
@@ -59,7 +65,10 @@ ROOT_URLCONF = 'futQualizer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR ,'templates'],
+        # 'DIRS': [BASE_DIR ,'templates'],
+        'DIRS': [
+             os.path.join(BASE_DIR, 'app', 'build'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -141,8 +150,13 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
+# STATICFILES_DIRS = [
+#     BASE_DIR ,'static',
+# ]
+
+#React
 STATICFILES_DIRS = [
-    BASE_DIR ,'static',
+    os.path.join(BASE_DIR, 'app', 'build', 'static')
 ]
 
 # 로그인 성공후 이동하는 URL
