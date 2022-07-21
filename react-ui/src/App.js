@@ -1,16 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button} from "react-bootstrap";
-
+import { Navbar, Nav, NavDropdown, Form, Button, FormControl, Container } from 'react-bootstrap';
+import PageHeader  from './components/PageHeader';
+import MyTable from './components/test';
 function App() {
   return (
-    <Stack direction="horizontal" gap={2}>
-      <Button as="a" variant="primary">
-        Button as link
-      </Button>
-      <Button as="a" variant="success">
-        Button as link
-      </Button>
-    </Stack>
+  <Container>
+    <PageHeader/>
+    <MyTable/>
+  </Container>
   );
 }
 
