@@ -37,7 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',    
+    'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'rest_auth.registration',
+    'allauth',
     'futQ',    
     'rest_framework',
     'player',
@@ -46,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,12 +59,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:3000',
-]
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000', # react의 포트번호
+    'http://127.0.0.1:8000', # django의 포트번호
+)
 
 ROOT_URLCONF = 'futQualizer.urls'
 
@@ -110,6 +117,7 @@ DATABASES = {
         }
     }
 }
+
 
 
 # Password validation
@@ -167,3 +175,16 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Custom Auth User
 AUTH_USER_MODEL = 'account.User'
+
+
+# Rest Framework config. Add all of this.
+REST_FRAMEWORK = {
+    'DATETIME_FORMAT': "%m/%d/%Y %I:%M%P",
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
+AUTHENTICATION_BACKENDS = (    
+	"django.contrib.auth.backends.ModelBackend",    
+    "allauth.account.auth_backends.AuthenticationBackend",
+)

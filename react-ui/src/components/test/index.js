@@ -1,4 +1,4 @@
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { useState, useEffect } from 'react';
 const columns = [
     {
@@ -9,7 +9,8 @@ const columns = [
         renderCell: (params) => <img src={params.value} />, // renderCell will render the component
     },  
     { field: 'name', headerName: 'NAME', width: 170 },
-    { field: 'age', headerName: 'AGE', width: 170 },
+    { field: 'rating', headerName: 'AGE', width: 100 },
+    { field: 'version', headerName: 'version', width: 150 },
 ];
 function MyTable() {
     const [dataGridRows, setDataGridRows] = useState([]);
@@ -18,14 +19,8 @@ function MyTable() {
         fetch(url)
         .then((response)=> response.json())
         .then((data)=>{
-            data.players.forEach(player=>{
-                let tmpPlayer = {
-                    id: player.id,
-                    name : player.name,
-                    img :player.img,
-                    rating: player.rating
-                }
-                setDataGridRows(dataGridRows => [...dataGridRows, tmpPlayer]);            
+            data.players.forEach(player=>{                
+                setDataGridRows(dataGridRows => [...dataGridRows, player]);
             })
         });
     }
@@ -35,7 +30,7 @@ function MyTable() {
   return (
     <div style={{ height: 500, width: '80%' }}>      
       <DataGrid rows={dataGridRows} columns={columns} 
-        pageSize={5}
+        pageSize={10}
       />
     </div>
   );

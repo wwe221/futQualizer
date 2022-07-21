@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include, re_path
 from account.views import index
 urlpatterns = [    
-    path('', include('account.urls')),
+    path('', include('futQ.urls')),
+    path('auth/',include('account.urls')),
     re_path(r'^.*/$', index),
     path('admin/', admin.site.urls),
     path('player/', include('player.urls')),
