@@ -67,7 +67,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # 'DIRS': [BASE_DIR ,'templates'],
         'DIRS': [
-             os.path.join(BASE_DIR, 'app', 'build'),
+             os.path.join(BASE_DIR, 'react-ui', 'build'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -156,7 +156,7 @@ STATIC_URL = '/static/'
 
 #React
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'app', 'build', 'static')
+    os.path.join(BASE_DIR, 'react-ui', 'build', 'static')
 ]
 
 # 로그인 성공후 이동하는 URL
