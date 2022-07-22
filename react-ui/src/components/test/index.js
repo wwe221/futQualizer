@@ -1,12 +1,19 @@
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
+import Avatar from "@mui/material/Avatar";
 import { useState, useEffect } from 'react';
-const columns = [
+const columns = [   
     {
-        field: 'img',
-        headerName: 'Image',
-        width: 150,
-        editable: true,
-        renderCell: (params) => <img src={params.value} />, // renderCell will render the component
+      field: "player",
+      headerName: "Player",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <>
+            <Avatar src={params.row.img} variant="square"/>
+            {params.row.name}
+          </>
+        );
+      }
     },  
     { field: 'name', headerName: 'NAME', width: 170 },
     { field: 'rating', headerName: 'AGE', width: 100 },
@@ -27,8 +34,9 @@ function MyTable() {
     useEffect(() => {
         SetPlayerData();
       }, []);
+
   return (
-    <div style={{ height: 500, width: '80%' }}>      
+    <div style={{ height: 700, width: '100%' }}>      
       <DataGrid rows={dataGridRows} columns={columns} 
         pageSize={10}
       />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const SignupPage = () => {
-  const [email, setEmail] = useState('');
+  const [username, setEmail] = useState('');
   const [password1, setPassword1] = useState('');
   const [password2, setPassword2] = useState('');
   const [errors, setErrors] = useState(false);
@@ -9,7 +9,7 @@ const SignupPage = () => {
 
   useEffect(() => {
     if (localStorage.getItem('token') !== null) {
-      window.location.replace('http://localhost:3000/dashboard');
+      window.location.replace('http://localhost:3000/');
     } else {
       setLoading(false);
     }
@@ -19,12 +19,12 @@ const SignupPage = () => {
     e.preventDefault();
 
     const user = {
-      email: email,
+      username: username,
       password1: password1,
       password2: password2
     };
 
-    fetch('http://127.0.0.1:8000/api/v1/mall/auth/register/', {
+    fetch('http://127.0.0.1:8000/auth/register/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -36,7 +36,7 @@ const SignupPage = () => {
         if (data.key) {
           localStorage.clear();
           localStorage.setItem('token', data.key);
-          window.location.replace('http://localhost:3000/dashboard');
+          window.location.replace('http://localhost:3000/');
         } else {
           setEmail('');
           setPassword1('');
@@ -52,11 +52,11 @@ const SignupPage = () => {
       {loading === false && <h1>Signup</h1>}
       {errors === true && <h2>Cannot signup with provided credentials</h2>}
       <form onSubmit={onSubmit}>
-        <label htmlFor='email'>Email address:</label> <br />
+        <label htmlFor='username'>username</label> <br />
         <input
-          name='email'
-          type='email'
-          value={email}
+          name='username'
+          type='username'
+          value={username}
           onChange={e => setEmail(e.target.value)}
           required
         />{' '}
