@@ -27,7 +27,7 @@ const columns = [
     { field: 'version', headerName: 'version', width: 150 },
     {
       field: 'Action',
-      headerName: 'Team에 추가',
+      headerName: '',
       renderCell: (params) => {
         const onClick = (e) => {
           const data = {playerId: params.row.id,};
@@ -35,7 +35,7 @@ const columns = [
             'Content-Type': 'application/json',
             'X-CSRFTOKEN': cookie.load("csrftoken"),
           };
-          axios.post('player/addMyteam', data, { headers })
+          axios.post('../player/addMyteam', data, { headers })
           .then((response)=>{
             if(response.status == 200){
               
@@ -44,35 +44,30 @@ const columns = [
         }
         return  (
         <Button variant="outlined" onClick={onClick}>
-            <AddIcon/>
+            <RemoveIcon/>
         </Button>
         )
       }
     },
 ];
          
-function MyTable() {
+function MyTeam() {
   const [dataGridRows, setDataGridRows] = useState([]);
   const [myTeam, setMyteam] = useState([]);
-
-
-  useEffect(() => {
-    const url = 'player/all';
-    fetch(url)
-    .then((response)=> response.json())
-    .then((data)=>{
-        data.players.forEach(player=>{                
-            setDataGridRows(dataGridRows => [...dataGridRows, player]);
-        })
-    });       
+  useEffect(() => {    
     const squad_url = 'squad/myteam';
     axios.post(squad_url,    
       {
         headers: {
             'X-CSRFTOKEN': cookie.load("csrftoken"),
         },
-      },
-    ).then((response) => console.log(response));
+      })
+    .then((result)=>result.data)
+    .then((data)=>{                  
+      data.player_list.forEach(player=>{                
+          setDataGridRows(dataGridRows => [...dataGridRows, player]);
+      })
+    });
   }, []);
 
   return (
@@ -83,4 +78,4 @@ function MyTable() {
     </div>
   );
 }
-export default MyTable;
+export default MyTeam;

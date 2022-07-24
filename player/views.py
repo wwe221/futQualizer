@@ -1,7 +1,7 @@
 import requests, time, json
 from django.http import JsonResponse
 from django.shortcuts import render
-
+import json
 from account.models import User
 from .models import Player 
 from bs4 import BeautifulSoup
@@ -107,9 +107,10 @@ def detail(request, player_id):
     }
     return render(request, 'player/detail.html', context)
 
-def add_to_myteam(request):    
+def add_to_myteam(request):        
     if request.user.is_authenticated and request.method =="POST":
-        id = request.POST['playerId']
+        data = json.loads(request.body.decode('utf-8'))
+        id = data.get("playerId")
         user = request.user
         player = Player.objects.get(id=id)
         user = User.objects.get(username=user.username)        

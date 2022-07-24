@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
+from corsheaders.defaults import default_headers
 
 import os
 
@@ -64,9 +65,14 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000', # react의 포트번호
-    'http://127.0.0.1:8000', # django의 포트번호
+    'http://127.0.0.1:3000',
+    'http://localhost:8000', # django의 포트번호
+    'http://127.0.0.1:8000'
 )
 
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'X-CSRFTOKEN',
+]
 ROOT_URLCONF = 'futQualizer.urls'
 
 TEMPLATES = [

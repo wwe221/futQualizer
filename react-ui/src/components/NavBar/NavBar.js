@@ -45,9 +45,14 @@ function NavBar() {
     <div>
       <MenuList>
         <Menu>
-          { auth ?
-            <Menu.Item key="logout" onClick={handleLogout}>
-              로그아웃
+          { auth ?            
+            <Menu.Item key="logout">
+              <Link to="/logout" onClick={handleLogout}>
+                로그아웃
+              </Link>              
+              <Link to="/squad">
+                내 스쿼드
+              </Link>              
             </Menu.Item>
             :
             <Menu.Item key="signin">

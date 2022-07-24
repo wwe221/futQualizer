@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse
 from .models import Squad, Formation, Position
 from player.models import Player
@@ -31,7 +32,8 @@ def myteam(request):
         playerList = user.team.order_by('rating')
         squadList = Squad.objects.filter(own_user_id=user.id)        
         context = {
-            'player_list':playerList,
-            'squad_list':squadList
-        }
-        return render(request,'player/myteam.html',context )
+            'player_list':list(playerList.values()),
+            'squad_list':list(squadList.values())
+        }        
+        return JsonResponse(context)
+        
