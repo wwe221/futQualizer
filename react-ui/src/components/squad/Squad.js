@@ -4,38 +4,20 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useState, useEffect } from 'react';
-import axios from '../../lib/axios'
-import cookie from "react-cookies";
-axios.defaults.xsrfCookieName = "csrftoken";
-axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+import axios from "../../lib/axios";
 const columns = [   
     {
-      field: "player",
-      headerName: "Player",
-      width: 200,
-      renderCell: (params) => {
-        return (
-          <>
-            <Avatar src={params.row.img} variant="square"/>
-             {params.row.name}
-          </>
-        );
-      }
+      field: "name",
+      headerName: "name",
+      width: 200,     
     },  
-    { field: 'position', headerName: 'Position', width: 100 },
-    { field: 'rating', headerName: 'AGE', width: 100 },
-    { field: 'version', headerName: 'version', width: 150 },
+    { field: 'formation', headerName: 'formation', width: 100 },
     {
       field: 'Action',
       headerName: '',
       renderCell: (params) => {
         const onClick = (e) => {
-          const data = {playerId: params.row.id,};
-          const headers = {                           
-            'Content-Type': 'application/json',
-            'X-CSRFTOKEN': cookie.load("csrftoken"),
-          };
-          axios.post('api/player/addMyteam', data)
+          axios.post('api/squad/test')
           .then((response)=>{
             if(response.status == 200){
               
@@ -51,18 +33,20 @@ const columns = [
     },
 ];
          
-function MyTeam() {
+function Squad() {
   const [dataGridRows, setDataGridRows] = useState([]);
-  const [myTeam, setMyteam] = useState([]);
+  
   useEffect(() => {    
-    const squad_url = 'api/squad/myteam';
-    axios.post(squad_url)
+    const squad_url = 'api/squad/list/';
+    axios.post(squad_url)     
     .then((result)=>result.data)
     .then((data)=>{                  
-      data.player_list.forEach(player=>{                
+      data.player_list.forEach(player=>{
           setDataGridRows(dataGridRows => [...dataGridRows, player]);
       })
-    });
+    });  
+    axios.post('api/squad/test/')
+    .then((result)=>console.log(result))
   }, []);
 
   return (
@@ -73,4 +57,4 @@ function MyTeam() {
     </div>
   );
 }
-export default MyTeam;
+export default Squad;

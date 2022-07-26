@@ -56,7 +56,10 @@ export default function ButtonAppBar() {
             futQ
           </Typography>
           { auth ?
-          <div>            
+          <div>
+             <Button color="inherit" href="/squad">
+              My Squads
+            </Button>
             <Button color="inherit" href="/myteam">
               My Team
             </Button>            

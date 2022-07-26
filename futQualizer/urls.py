@@ -21,6 +21,6 @@ urlpatterns = [
     path('auth/',include('account.urls')),
     re_path(r'^.*/$', index),
     path('admin/', admin.site.urls),
-    path('player/', include('player.urls')),
-    path('squad/',include('squad.urls'))
+    path('api/player/', include('player.urls')),
+    path('api/squad/',include('squad.urls'))
 ]

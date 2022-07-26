@@ -4,10 +4,11 @@ import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useState, useEffect } from 'react';
-import axios from "axios";
+import axios from "../../lib/axios";
 import cookie from "react-cookies";
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+
 const columns = [   
     {
       field: "player",
@@ -23,7 +24,7 @@ const columns = [
       }
     },  
     { field: 'position', headerName: 'Position', width: 100 },
-    { field: 'rating', headerName: 'AGE', width: 100 },
+    { field: 'rating', headerName: 'Rating', width: 100 },
     { field: 'version', headerName: 'version', width: 150 },
     {
       field: 'Action',
@@ -35,7 +36,7 @@ const columns = [
             'Content-Type': 'application/json',
             'X-CSRFTOKEN': cookie.load("csrftoken"),
           };
-          axios.post('player/addMyteam', data, { headers })
+          axios.post('api/player/addMyteam', data)
           .then((response)=>{
             if(response.status == 200){
               
@@ -53,26 +54,17 @@ const columns = [
          
 function MyTable() {
   const [dataGridRows, setDataGridRows] = useState([]);
-  const [myTeam, setMyteam] = useState([]);
-
-
+  
   useEffect(() => {
-    const url = 'player/all';
-    fetch(url)
+    fetch('api/player/all')
     .then((response)=> response.json())
     .then((data)=>{
         data.players.forEach(player=>{                
             setDataGridRows(dataGridRows => [...dataGridRows, player]);
         })
-    });       
-    const squad_url = 'squad/myteam';
-    axios.post(squad_url,    
-      {
-        headers: {
-            'X-CSRFTOKEN': cookie.load("csrftoken"),
-        },
-      },
-    ).then((response) => console.log(response));
+    });
+    axios.post('api/squad/myteam')
+    .then((response) => console.log(response));
   }, []);
 
   return (
