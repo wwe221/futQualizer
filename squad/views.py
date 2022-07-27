@@ -29,7 +29,7 @@ def test(request):
     return HttpResponse(json.dumps(context), status=200, content_type='application/json')
 
 # user 가 가지고 있는 스쿼드 리스트
-def list(request):
+def mylist(request):
     if request.user.is_authenticated:
         user = request.user
         squadList = Squad.objects.filter(own_user_id=user.id)
@@ -42,8 +42,7 @@ def list(request):
 def myteam(request):
     if request.user.is_authenticated:
         user = request.user
-        playerList = user.team
-        print(playerList)
+        playerList = user.team.order_by("-rating")
         context = {
             'player_list': list(playerList.values()),
         }
