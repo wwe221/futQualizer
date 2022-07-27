@@ -26,7 +26,7 @@ const columns = [
         }
         return  (
         <Button variant="outlined" onClick={onClick}>
-            <RemoveIcon/>
+            <AddIcon/>
         </Button>
         )
       }
@@ -37,16 +37,14 @@ function Squad() {
   const [dataGridRows, setDataGridRows] = useState([]);
   
   useEffect(() => {    
-    const squad_url = 'api/squad/list/';
+    const squad_url = 'api/squad/list';
     axios.post(squad_url)     
     .then((result)=>result.data)
     .then((data)=>{                  
-      data.player_list.forEach(player=>{
+      data.squad_list.forEach(player=>{
           setDataGridRows(dataGridRows => [...dataGridRows, player]);
       })
-    });  
-    axios.post('api/squad/test/')
-    .then((result)=>console.log(result))
+    });
   }, []);
 
   return (
