@@ -54,7 +54,7 @@ const columns = [
 function MyTeam() {
   const [dataGridRows, setDataGridRows] = useState([]);
   const [myTeam, setMyteam] = useState([]);
-  useEffect(() => {    
+  useEffect(() => {
     const squad_url = 'api/squad/myteam';
     axios.post(squad_url)
     .then((result)=>result.data)

@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.http import JsonResponse
 from django.shortcuts import render, HttpResponse
 from .models import Squad, Formation, Position
@@ -47,3 +48,9 @@ def myteam(request):
             'player_list': list(playerList.values()),
         }
         return JsonResponse(context)
+def get_squad(request,squad_id):
+    squad = Squad.objects.get(id=squad_id)        
+    data = serializers.serialize('json', [ squad, ])
+    struct = json.loads(data)
+    data = json.dumps(struct[0])
+    return HttpResponse(data, content_type='application/json')

@@ -2,16 +2,24 @@ import { useState, useEffect } from 'react';
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useSearchParams } from "react-router-dom"
+import axios from '../../lib/axios'
 
-function SquadDetail() {    
-    const [searchParams, setSearchParams] = useSearchParams()
-    const term = searchParams.get("term")
-    const location = searchParams.get("location")
-    console.log(searchParams, term, location)
-
-    useEffect(() => {
+function SquadDetail() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const squadId = searchParams.get("squadId")  
+  const [myTeam, setMyTeam] = useState([]);  
+  useEffect(() => {
+    const squad_url = 'api/squad/'+squadId;
+    axios.post(squad_url)
+    .then((result)=>result)
+    .then((data)=>{    
+      console.log(data);
+      console.log(data.players);
+      });
     }, []);
+    
 
+    
     return (
         <Box sx={{ flexGrow: 1 }}>
           <Grid
