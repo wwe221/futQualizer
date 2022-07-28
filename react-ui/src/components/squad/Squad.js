@@ -15,17 +15,9 @@ const columns = [
     {
       field: 'Action',
       headerName: '',
-      renderCell: (params) => {
-        const onClick = (e) => {
-          axios.post('api/squad/test')
-          .then((response)=>{
-            if(response.status == 200){
-              
-            }
-          })
-        }
+      renderCell: (params) => {        
         return  (
-        <Button variant="outlined" onClick={onClick}>
+        <Button variant="outlined" href={"/squad/detail/?squadId="+params.id}>
             <AddIcon/>
         </Button>
         )
