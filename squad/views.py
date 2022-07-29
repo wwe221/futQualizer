@@ -48,9 +48,22 @@ def myteam(request):
             'player_list': list(playerList.values()),
         }
         return JsonResponse(context)
+
 def get_squad(request,squad_id):
-    squad = Squad.objects.get(id=squad_id)        
-    data = serializers.serialize('json', [ squad, ])
+    squad = Squad.objects.get(id=squad_id)
+    playerList = []
+    for player in squad.players:
+        playerObj = {
+            'position': player.get("position"),
+            'player':list(Player.objects.filter(id=player.get('playerId')).values())[0]
+        }
+        playerList.append(playerObj)        
+    data = serializers.serialize('json', [ squad,])
     struct = json.loads(data)
     data = json.dumps(struct[0])
-    return HttpResponse(data, content_type='application/json')
+    context = {
+        'name':squad.name,
+        'formation':squad.formation,
+        'players': playerList
+    }
+    return JsonResponse(context)
