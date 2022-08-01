@@ -8,7 +8,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (localStorage.getItem('token') !== null) {
-      window.location.replace('http://localhost:3000');
+      window.location.replace('http://127.0.0.1:8000');
     } else {
       setLoading(false);
     }
@@ -34,7 +34,8 @@ const LoginPage = () => {
         if (data.key) {
           localStorage.clear();
           localStorage.setItem('token', data.key);
-          window.location.replace('http://localhost:3000');
+          localStorage.setItem('username', user.username);
+          window.location.replace('http://127.0.0.1:8000');
         } else {
           setUsername('');
           setPassword('');

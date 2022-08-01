@@ -5,24 +5,22 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
-import LoginPage from '../User/LoginPage';
-import MyTeam from '../User/MyTeam';
-import { Container } from 'react-bootstrap';
+import axios from '../../lib/axios'
 import HomeIcon from '@mui/icons-material/Home';
 
+var USER_INFO;
 export default function ButtonAppBar() {
   const [auth, setAuth] = useState('')
 
   useEffect(() => {
     if (localStorage.getItem('token') !== null) {
-      setAuth(true);
+      setAuth(true);      
+      axios.post('auth/get/user/')     
+      .then((result)=>USER_INFO = result.data)
     }
   }, [])
 
   const handleLogout = () => {
-
    fetch('http://127.0.0.1:8000/auth/logout/', {
      method: 'POST',
      headers: {

@@ -41,9 +41,7 @@ function Squad() {
 
   return (
     <div style={{ height: 700, width: '100%' }}>      
-      <DataGrid rows={dataGridRows} columns={columns} 
-        pageSize={10}
-      />
+      <DataGrid rows={dataGridRows} columns={columns} pageSize={10} />
     </div>
   );
 }

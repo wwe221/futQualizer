@@ -1,21 +1,17 @@
-from django.http import HttpResponse
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
-from .forms import UserCreationForm
+from django.http import JsonResponse
+from django.shortcuts import render
+
 
 def index(request):
     return render(request, 'index.html',{})
 
-def signup(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)  # 사용자 인증
-            login(request, user)  # 로그인
-            return redirect('index')
-    else:
-        form = UserCreationForm()
-    return render(request, 'common/signup.html', {'form': form})
+def get_logged_user_by_token(request):
+    if request.user.is_authenticated: 
+        user = request.user
+        result = {
+            'username':user.username,            
+            'user_team':list(user.team.values())
+        }       
+        return JsonResponse(result)
+    return JsonResponse({})
+    

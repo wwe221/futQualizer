@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
-import MyTable from '../test';
+import MyTable from '../player/AllTable';
 import LoginPage from '../User/LoginPage';
 import SignupPage from '../User/SignUpPage';
 import MyTeam from '../User/MyTeam';

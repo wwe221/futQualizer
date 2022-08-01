@@ -20,7 +20,6 @@ function SquadDetail() {
         });
       });
   }, []);
-  console.log(myTeam);
 
 
   return (
