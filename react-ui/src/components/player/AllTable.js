@@ -95,11 +95,9 @@ function MyTable() {
   useEffect(() => {
     fetch('api/player/all')
     .then((response)=> response.json())
-    .then((data)=>{
-        data.players.forEach(player=>{                
-            setDataGridRows(dataGridRows => [...dataGridRows, player]);
-        })
-    });    
+    .then((data)=>{      
+      setDataGridRows(data.players);      
+    });
   }, []);
 
   return (

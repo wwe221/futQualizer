@@ -14,9 +14,17 @@ def test(request):
     player2 = Player.objects.get(id=25960)
     player3 = Player.objects.get(id=25939)
     players_in_squad = [
-        {'position': Position.CAM, 'playerId': player1.id},
-        {'position': Position.CB, 'playerId': player2.id},
-        {'position': Position.ST, 'playerId': player3.id},
+        {'ordinal': 1, 'playerId': player1.id},
+        {'ordinal': 2, 'playerId': player2.id},
+        {'ordinal': 3, 'playerId': player3.id},
+        {'ordinal': 4,'playerId':0},
+        {'ordinal': 5,'playerId':0},
+        {'ordinal': 6,'playerId':0},
+        {'ordinal': 7,'playerId':0},
+        {'ordinal': 8,'playerId':0},
+        {'ordinal': 9,'playerId':0},
+        {'ordinal': 10,'playerId':0},
+        {'ordinal': 11,'playerId':0},
     ]
     squad = Squad()
     squad.name = 'Test'
@@ -53,9 +61,13 @@ def get_squad(request,squad_id):
     squad = Squad.objects.get(id=squad_id)
     playerList = []
     for player in squad.players:
+        playerInfo = None
+        if(player.get('playerId') != 0):
+            playerInfo = list(Player.objects.filter(id=player.get('playerId')).values())[0]        
+            
         playerObj = {
-            'position': player.get("position"),
-            'player':list(Player.objects.filter(id=player.get('playerId')).values())[0]
+            'ordinal': player.get("ordinal"),
+            'player': playerInfo
         }
         playerList.append(playerObj)        
     data = serializers.serialize('json', [ squad,])

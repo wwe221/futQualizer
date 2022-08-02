@@ -28,8 +28,8 @@ class Formation(models.TextChoices):
     F352 = "3-5-2"
 
 class player_in_sqaud(models.Model):
-    position = models.CharField(choices=Position.choices, default=Position.ST, max_length=5,null=False)
-    playerId = models.PositiveIntegerField(null=False,default=0)    
+    ordinal = models.PositiveSmallIntegerField(null=False,default=1)
+    playerId = models.PositiveIntegerField(default=0)    
     class Meta:
         abstract = True
 
@@ -37,7 +37,7 @@ class AuthorForm(forms.ModelForm):
     class Meta:
         model = player_in_sqaud
         fields = (
-            'position', 'playerId'
+            'ordinal', 'playerId'
         )
 
 class Squad(models.Model):

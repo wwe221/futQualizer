@@ -23,11 +23,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Player(prop) {
-    const playerInfo = prop.player;
-    const player = playerInfo.player
     const classes = useStyles();
-    return (
-      <Card className={classes.root} sx={{ maxWidth: 345 }}>
+    const playerInfo = prop.player;
+    if(playerInfo == undefined)
+      return;
+    const player = playerInfo.player;
+    return player != undefined ? (
+      <Card className={classes.root} sx={{ maxWidth: 345, maxHeight:200}}>
         <CardMedia
           component="img"
           height="100%"
@@ -35,10 +37,25 @@ export default function Player(prop) {
           alt="green iguana"
         />
         <Typography gutterBottom variant="h5" component="div">
-          {playerInfo.position}
+          {playerInfo.ordinal}
         </Typography>
         <Typography variant="body2" color="text.secondary" className={classes.font}>
           {player.name}
+        </Typography>        
+        <CardActions>
+          <Button size="small">Share</Button>
+          <Button size="small">Learn More</Button>
+        </CardActions>
+      </Card>
+    ) : (
+      <Card className={classes.root} sx={{ maxWidth: 345, maxHeight:200 }}>
+        <CardMedia
+          component="img"
+          height="150px"          
+          alt="No Player"
+        />
+        <Typography variant="body2" color="text.secondary" className={classes.font}>
+          No Player
         </Typography>        
         <CardActions>
           <Button size="small">Share</Button>
