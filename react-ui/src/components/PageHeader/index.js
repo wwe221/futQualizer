@@ -66,9 +66,14 @@ export default function ButtonAppBar() {
             </Button>
           </div>
           : 
+          <div>
+          <Button color="inherit" href="/signup">
+            SignUp
+          </Button>
           <Button color="inherit" href="/login">
             Login
           </Button>
+          </div>
           }
         </Toolbar>
       </AppBar>

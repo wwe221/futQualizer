@@ -9,27 +9,17 @@ import json
 
 # test, user
 def test(request):
-    print(Formation.choices)
-    player1 = Player.objects.get(id=24626)
-    player2 = Player.objects.get(id=25960)
-    player3 = Player.objects.get(id=25939)
+    playerList = list(Player.objects.order_by('rating'))
     players_in_squad = [
-        {'ordinal': 1, 'playerId': player1.id},
-        {'ordinal': 2, 'playerId': player2.id},
-        {'ordinal': 3, 'playerId': player3.id},
-        {'ordinal': 4,'playerId':0},
-        {'ordinal': 5,'playerId':0},
-        {'ordinal': 6,'playerId':0},
-        {'ordinal': 7,'playerId':0},
-        {'ordinal': 8,'playerId':0},
-        {'ordinal': 9,'playerId':0},
-        {'ordinal': 10,'playerId':0},
-        {'ordinal': 11,'playerId':0},
     ]
+    for idx in range(0,15):        
+        players_in_squad.append(
+            {"ordinal":idx , "playerId":playerList[idx].id}
+        )
     squad = Squad()
     squad.name = 'Test'
     squad.own_user = User.objects.get(username=request.user.username)
-    squad.formation = Formation.F41212
+    squad.formation = Formation.F442
     squad.players = players_in_squad
     squad.save()
     context = {

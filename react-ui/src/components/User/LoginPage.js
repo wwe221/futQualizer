@@ -51,7 +51,7 @@ const LoginPage = () => {
       {errors === true && <h2>Cannot log in with provided credentials</h2>}
       {loading === false && (
         <form onSubmit={onSubmit}>
-          <label htmlFor='username'>username address:</label> <br />
+          <label htmlFor='username'>username:</label> <br />
           <input
             name='username'
             type='username'
